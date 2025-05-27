@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 import subprocess
-import os
 
 app = Flask(__name__)
+
+@app.route('/health')
+def health():
+    return 'OK', 200
 
 @app.route('/bestmove', methods=['POST'])
 def bestmove():
@@ -35,7 +38,5 @@ def bestmove():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
-    # Render vyžaduje dynamický port
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=10000)
 
