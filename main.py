@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import subprocess
+import os
 
 app = Flask(__name__)
 
@@ -10,7 +11,6 @@ def bestmove():
     if not fen:
         return jsonify({'error': 'Missing FEN'}), 400
 
-    # Spustenie Stockfish
     try:
         engine = subprocess.Popen(
             ["./stockfish"],
@@ -20,7 +20,7 @@ def bestmove():
             text=True
         )
         engine.stdin.write(f"position fen {fen}\n")
-        engine.stdin.write("go movetime 1000\n")  # 1 sekunda
+        engine.stdin.write("go movetime 1000\n")
         engine.stdin.flush()
 
         while True:
@@ -35,5 +35,7 @@ def bestmove():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    # Render vyžaduje dynamický port
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
 
