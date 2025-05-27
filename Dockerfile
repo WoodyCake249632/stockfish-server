@@ -5,7 +5,7 @@ WORKDIR /app
 # Skopíruj súbory
 COPY requirements.txt .
 COPY main.py .
-COPY stockfish ./stockfish
+COPY stockfish .
 
 # Nastav práva na binárku
 RUN chmod +x ./stockfish
