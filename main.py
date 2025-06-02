@@ -23,7 +23,7 @@ def bestmove():
             text=True
         )
         engine.stdin.write(f"position fen {fen}\n")
-        engine.stdin.write("go movetime 1000\n")
+        engine.stdin.write("go movetime 750\n")
         engine.stdin.flush()
 
         while True:
